@@ -1,13 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
 html, body {
     padding: 0;
     margin: 0;
-    background-color: #fff7ed;
+    background-color: #fafafa;
     font-family: "Noto Sans", sans-serif;
 }
 
 .app-container{
-    max-width: 400px;
-    margin: 10px auto;
+    max-width: 450px;
+    margin: auto;
+    padding: 10px;
 }
 .logo {
     margin-left: 10px;
@@ -19,13 +22,36 @@ html, body {
     font-size: 48px;
 }
 
+.colmado-number {
+    font-family: 'Creepster', cursive;
+    font-size: 70px;
+}
+
 .field-inputs {
     display: flex;
+    justify-content: flex-end   ;
     gap: 5px;
+    margin-bottom: 30px;
 }
 
 .field-inputs * {
-    flex-grow: 1;
     text-align: center;
-    padding: 5px;
+}
+
+#input-gasto, #input-venta {
+    width: 90px;
+}
+
+.table-container {
+    margin-top: 10px;
+    overflow-x: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #ea580c;
+    border-radius: 2px;
+    border: solid 1px #ea580c;
+    color: white;
 }

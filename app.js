@@ -1,38 +1,92 @@
+import { generateDateSequence } from "./modules/handle-dates.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+import * as datatables from 'https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js';
+
+const appSettings = {
+    databaseURL: "https://playground-ee653-default-rtdb.firebaseio.com/"
+}
+
+const app = initializeApp(appSettings)
+const database = getDatabase(app)
+
 let inputDate = document.getElementById("input-date")
 let inputVenta = document.getElementById("input-venta")
+let inputGasto = document.getElementById("input-gasto")
 let addButton = document.getElementById("add-btn")
+let startDate = document.getElementById("start-date")
+
+let dateSequence
+
+onValue(ref(database, 'ventasO7/startDate'), snapshot => {
+    startDate.value = snapshot.val()
+    dateSequence = generateDateSequence(startDate.value)
+})
+
+startDate.addEventListener("change", () => {
+    dateSequence = generateDateSequence(startDate.value)
+    set(ref(database, 'ventasO7/startDate'), startDate.value)
+})
+
+// Setup firebase Real Time DB
+onValue(ref(database, 'ventasO7'), snapshot => {
+    let data = snapshot.val()
+    let dataEntries = Object.entries(data)
+
+    // Clear existing table rows
+    $('#table-body tbody').empty();
+    
+    let filteredData = dataEntries.filter(row => dateSequence.includes(row[0]) && row[1].venta > 0)
+    // Add cumm total
+    let cumTotal = 0;
+
+    filteredData.forEach((value) => {
+        cumTotal += value[1].venta
+        addRowElement(value[0], value[1].gasto, value[1].venta, cumTotal)
+    })
+
+    let lastDate = filteredData[filteredData.length - 1][0]
+
+    // Add one day to the inputDate value
+    const dateObj = new Date(lastDate);
+    dateObj.setDate(dateObj.getDate() + 1);
+    inputDate.value = dateObj.toISOString().slice(0, 10)
+})
+
+
+const addRowElement = (date, gasto, venta, total) => {
+    let tableBody = document.querySelector("#table-body tbody")
+    let row = document.createElement("tr")
+    row.innerHTML = `
+        <td>${date}</td>
+        <td>${formatNumber(gasto)}</td>
+        <td>${formatNumber(venta)}</td>
+        <td>${formatNumber(total)}</td>
+    `
+    tableBody.appendChild(row)
+}
+
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+let table = new DataTable('#table-body', {
+    responsive: true,
+    info: false,
+    ordering: false,
+    searching: false,
+    paging: false,
+});
 
 addButton.addEventListener("click", () => {
-    console.log(inputDate.value, inputVenta.value)
+    console.log(typeof inputVenta)
+    let dayRef = ref(database, `ventasO7/${inputDate.value}`)
+    set(dayRef, {gasto: Number(inputGasto.value), venta: Number(inputVenta.value)})
     clearInputs()
+    inputGasto.focus()
 })
 
 const clearInputs = () => {
-    inputDate.value = null
+    inputGasto.value = null
     inputVenta.value = null
 }
-
-function formatDate(date) {
-    var year = date.getFullYear();
-    var month = String(date.getMonth() + 1).padStart(2, '0');
-    var day = String(date.getDate()).padStart(2, '0');
-    return year + '-' + month + '-' + day;
-}
-
-function generateDateSequence() {
-    var currentDate = new Date(2024, 5, 02);
-    var endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
-
-    var dates = [];
-    while (currentDate < endDate) {
-        dates.push(formatDate(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    return dates;
-}
-
-// Example usage
-var dateSequence = generateDateSequence();
-console.log(dateSequence);
-

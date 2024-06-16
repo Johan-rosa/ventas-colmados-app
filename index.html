@@ -4,24 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    
     <title>Registro ventas O7</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wtotaltotalght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="app-container">
         <div class="app-header">
-            <h1>Ventas <img class="logo" src="assets/logO.png" height="50px" alt="">
-7</h1>
+            <h1>Ventas <img class="logo" src="assets/logO.png" height="50px" alt=""> <span class="colmado-number">7</span></h1>
         </div>
         <div class="field-inputs">
-            <input type="date" id="input-date" placeholder="dd-mm-yyyy" value="2024-06-14">
-            <input type="number" id="input-venta" placeholder="Monto vendido">
-            <button id="add-btn">Agregar</button>
+            <input type="date" id="input-date" placeholder="dd-mm-yyyy">
+            <input type="number" id="input-gasto" placeholder="Gasto">
+            <input type="number" id="input-venta" placeholder="Venta">
+            <button id="add-btn" class="btn-primary" type="button"">Agregar</button>
         </div>
-        <div class="app-body"></div>
+        <div>
+            <label for="input-date">Inicio</label>
+            <input type="date" id="start-date" placeholder="dd-mm-yyyy" value="2024-06-02">
+        </div>
+        <div class="app-body">
+            <table id="table-body" class="stripe compact">
+                <thead>
+                    <tr class="row-header">
+                        <th>Fecha</th>
+                        <th>Gasto</th>
+                        <th>Venta</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <script src="app.js"></script>
+    <script src=//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script src="app.js" type="module"></script>
 </body>
 </html>
