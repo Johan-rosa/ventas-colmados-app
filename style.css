@@ -28,19 +28,21 @@ html, body {
 }
 
 .field-inputs {
-    display: flex;
-    justify-content: flex-end   ;
-    gap: 5px;
-    margin-bottom: 30px;
+   margin-bottom: 30px;
 }
 
 .field-inputs * {
     text-align: center;
+    width: 90%;
+    margin: 5px auto;
+    display: block;
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 2px;
+    border: solid 1px #ea580c;
+    box-sizing: border-box;;
 }
 
-#input-gasto, #input-venta {
-    width: 90px;
-}
 
 .table-container {
     margin-top: 10px;
