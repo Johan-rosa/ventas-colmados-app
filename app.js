@@ -16,20 +16,22 @@ let inputGasto = document.getElementById("input-gasto")
 let addButton = document.getElementById("add-btn")
 let startDate = document.getElementById("start-date")
 
+let rootRef = "test_07"
+
 let dateSequence
 
-onValue(ref(database, 'ventasO7/startDate'), snapshot => {
+onValue(ref(database, `${rootRef}/startDate`), snapshot => {
     startDate.value = snapshot.val()
     dateSequence = generateDateSequence(startDate.value)
 })
 
 startDate.addEventListener("change", () => {
     dateSequence = generateDateSequence(startDate.value)
-    set(ref(database, 'ventasO7/startDate'), startDate.value)
+    set(ref(database, `${rootRef}/startDate`), startDate.value)
 })
 
 // Setup firebase Real Time DB
-onValue(ref(database, 'ventasO7'), snapshot => {
+onValue(ref(database, `${rootRef}`), snapshot => {
     let data = snapshot.val()
     let dataEntries = Object.entries(data)
 
@@ -80,7 +82,7 @@ let table = new DataTable('#table-body', {
 
 addButton.addEventListener("click", () => {
     console.log(typeof inputVenta)
-    let dayRef = ref(database, `ventasO7/${inputDate.value}`)
+    let dayRef = ref(database, `${rootRef}/${inputDate.value}`)
     set(dayRef, {gasto: Number(inputGasto.value), venta: Number(inputVenta.value)})
     clearInputs()
     inputGasto.focus()

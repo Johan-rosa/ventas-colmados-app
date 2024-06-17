@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
-
 html, body {
     padding: 0;
     margin: 0;
@@ -44,7 +43,6 @@ html, body {
     border: solid 1px #ea580c;
     box-sizing: border-box;;
 }
-
 
 .table-container {
     margin-top: 10px;
