@@ -12,11 +12,10 @@ const database = getDatabase(app)
 
 let inputDate = document.getElementById("input-date")
 let inputVenta = document.getElementById("input-venta")
-let inputGasto = document.getElementById("input-gasto")
 let addButton = document.getElementById("add-btn")
 let startDate = document.getElementById("start-date")
 
-let rootRef = "test_07"
+let rootRef = "ventasO7"
 
 let dateSequence
 
@@ -44,7 +43,7 @@ onValue(ref(database, `${rootRef}`), snapshot => {
 
     filteredData.forEach((value) => {
         cumTotal += value[1].venta
-        addRowElement(value[0], value[1].gasto, value[1].venta, cumTotal)
+        addRowElement(value[0], value[1].venta, cumTotal)
     })
 
     let lastDate = filteredData[filteredData.length - 1][0]
@@ -56,12 +55,11 @@ onValue(ref(database, `${rootRef}`), snapshot => {
 })
 
 
-const addRowElement = (date, gasto, venta, total) => {
+const addRowElement = (date, venta, total) => {
     let tableBody = document.querySelector("#table-body tbody")
     let row = document.createElement("tr")
     row.innerHTML = `
         <td>${date}</td>
-        <td>${formatNumber(gasto)}</td>
         <td>${formatNumber(venta)}</td>
         <td>${formatNumber(total)}</td>
     `
