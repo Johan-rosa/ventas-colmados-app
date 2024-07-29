@@ -58,6 +58,6 @@ html, body {
     color: white;
 }
 
-thtable.dataTable thead th {
+#table-body th {
     text-align: center;
 }
