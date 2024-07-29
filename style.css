@@ -57,3 +57,7 @@ html, body {
     border: solid 1px #ea580c;
     color: white;
 }
+
+thtable.dataTable thead th {
+    text-align: center;
+}
