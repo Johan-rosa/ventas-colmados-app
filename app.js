@@ -41,9 +41,9 @@ onValue(ref(database, `${rootRef}`), snapshot => {
     // Add cumm total
     let cumTotal = 0;
 
-    filteredData.forEach((value) => {
+    filteredData.forEach((value, index) => {
         cumTotal += value[1].venta
-        addRowElement(value[0], value[1].venta, cumTotal)
+        addRowElement(index + 1,value[0], value[1].venta, cumTotal)
     })
 
     let lastDate = filteredData[filteredData.length - 1][0]
@@ -55,10 +55,11 @@ onValue(ref(database, `${rootRef}`), snapshot => {
 })
 
 
-const addRowElement = (date, venta, total) => {
+const addRowElement = (index, date, venta, total) => {
     let tableBody = document.querySelector("#table-body tbody")
     let row = document.createElement("tr")
     row.innerHTML = `
+        <td>${index}</td>
         <td>${date}</td>
         <td>${formatNumber(venta)}</td>
         <td>${formatNumber(total)}</td>
