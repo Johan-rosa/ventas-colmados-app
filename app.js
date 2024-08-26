@@ -81,10 +81,12 @@ let table = new DataTable('#table-body', {
 
 addButton.addEventListener("click", () => {
     console.log(typeof inputVenta)
-    let dayRef = ref(database, `${rootRef}/${inputDate.value}`)
-    set(dayRef, {venta: Number(inputVenta.value)})
-    clearInputs()
-    inputVenta.focus()
+    if (inputDate.value) {
+        let dayRef = ref(database, `${rootRef}/${inputDate.value}`)
+        set(dayRef, {venta: Number(inputVenta.value)})
+        clearInputs()
+        inputVenta.focus()
+    }
 })
 
 const clearInputs = () => {
