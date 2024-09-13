@@ -7,7 +7,7 @@ export function formatDate(date) {
 
 export function generateDateSequence(startDate) {
     var currentDate = new Date(startDate);
-    currentDate.setDate(currentDate.getDate());
+    currentDate.setDate(currentDate.getDate() + 1);
     var endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
 
     var dates = [];
