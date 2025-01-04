@@ -14,6 +14,7 @@ let inputDate = document.getElementById("input-date")
 let inputVenta = document.getElementById("input-venta")
 let addButton = document.getElementById("add-btn")
 let startDate = document.getElementById("start-date")
+let endDate = document.getElementById("end-date");
 
 let rootRef = "ventasO7"
 
@@ -21,12 +22,21 @@ let dateSequence
 
 onValue(ref(database, `${rootRef}/startDate`), snapshot => {
     startDate.value = snapshot.val()
-    dateSequence = generateDateSequence(startDate.value)
+    dateSequence = generateDateSequence(startDate.value, endDate.value)
 })
 
+// Load end date from localStorage or set a default
+endDate.value = localStorage.getItem("endDate") || ""; 
+
 startDate.addEventListener("change", () => {
-    dateSequence = generateDateSequence(startDate.value)
-    set(ref(database, `${rootRef}/startDate`), startDate.value)
+    dateSequence = generateDateSequence(startDate.value);
+    set(ref(database, `${rootRef}/startDate`), startDate.value);
+})
+
+endDate.addEventListener("change", () => {
+    dateSequence = generateDateSequence(startDate.value, endDate.value);
+    localStorage.setItem("endDate", endDate.value);
+    set(ref(database, `${rootRef}/endDate`), endDate.value);
 })
 
 // Setup firebase Real Time DB
@@ -43,7 +53,7 @@ onValue(ref(database, `${rootRef}`), snapshot => {
 
     filteredData.forEach((value, index) => {
         cumTotal += value[1].venta
-        addRowElement(index + 1,value[0], value[1].venta, cumTotal)
+        addRowElement(index + 1, value[0], value[1].venta, cumTotal)
     })
 
     let lastDate = filteredData[filteredData.length - 1][0]

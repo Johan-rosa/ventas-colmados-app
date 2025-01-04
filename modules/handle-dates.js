@@ -5,13 +5,14 @@ export function formatDate(date) {
     return year + '-' + month + '-' + day;
 }
 
-export function generateDateSequence(startDate) {
-    var currentDate = new Date(startDate);
-    currentDate.setDate(currentDate.getDate() + 1);
-    var endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
-
+export function generateDateSequence(startDateString, endDateString = null) {
+    const startDate = new Date(startDateString);
+    const endDate = endDateString ? new Date(endDateString) : new Date(startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()); 
     var dates = [];
-    while (currentDate < endDate) {
+    let currentDate = new Date(startDate);
+    currentDate.setDate(currentDate.getDate() + 1); // Start from the next day
+
+    while (currentDate <= endDate) {
         dates.push(formatDate(currentDate));
         currentDate.setDate(currentDate.getDate() + 1);
     }
